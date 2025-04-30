@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Doctor;
 use App\Models\User;
-use App\Models\Availability; // Add this import
+use App\Models\Availability;
+use App\Jobs\ProcessProfileImage; // Add this import
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -71,21 +72,17 @@ class DoctorController extends Controller
             if ($request->hasFile('profile_photo')) {
                 $file = $request->file('profile_photo');
                 
-                // Delete existing photo if any
-                if ($doctor->profile_photo) {
-                    Storage::disk('public')->delete($doctor->profile_photo);
-                }
-    
                 // Generate unique filename
                 $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 
-                // Store file in public disk
+                // Store the original file first
                 $path = $file->storeAs('doctors/profile-photos', $filename, 'public');
+                
+                // Dispatch the job to process the image
+                ProcessProfileImage::dispatch($path, $doctor->user_id);
                 
                 // Update the path in database
                 $updateData['profile_photo'] = $path;
-                
-                \Log::info('Photo uploaded:', ['path' => $path]);
             }
     
             // Handle documents
