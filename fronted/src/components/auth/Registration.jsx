@@ -150,9 +150,9 @@ const Registration = () => {
       return;
     }
 
-    // Prepare form data
+    // Prepare form data with exact field names matching the backend
     const userData = {
-      email: formData.emailAddress.trim(),  // trim to remove any whitespace
+      email: formData.emailAddress.trim(),
       password: formData.password,
       password_confirmation: formData.confirmPassword,
       role: formData.role,
@@ -177,6 +177,7 @@ const Registration = () => {
         
         if (response.data.data?.token) {
           localStorage.setItem('auth_token', response.data.data.token);
+          localStorage.setItem('user_role', formData.role);
         }
         navigate('/login');
       }
@@ -184,13 +185,14 @@ const Registration = () => {
       let errorMessage = 'Registration failed. Please try again.';
       
       if (error.response?.data?.errors) {
-        errorMessage = Object.values(error.response.data.errors).flat().join('\n');
+        const errors = error.response.data.errors;
+        errorMessage = Object.values(errors).flat().join('\n');
       } else if (error.response?.data?.message) {
         errorMessage = error.response.data.message;
       }
       
       setMessage(errorMessage);
-      alert(errorMessage);
+      setError(errorMessage); // Add error state if not already present
     } finally {
       setLoading(false);
     }
