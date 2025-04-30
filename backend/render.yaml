@@ -14,12 +14,12 @@ services:
       - key: DB_CONNECTION
         value: mysql
       - key: DB_HOST
-        sync: false
+        value: containers-us-west-198.railway.app
       - key: DB_PORT
-        value: 3306
+        value: 7317
       - key: DB_DATABASE
-        sync: false
+        value: railway
       - key: DB_USERNAME
-        sync: false
+        value: root
       - key: DB_PASSWORD
-        sync: false
+        value: guXHsVdoEcnAYrCyUlLGaXMFFkOtRuFi

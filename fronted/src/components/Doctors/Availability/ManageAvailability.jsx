@@ -40,7 +40,7 @@ const ManageAvailability = () => {
     try {
       const token = localStorage.getItem('auth_token');
       const response = await axios.patch(
-        'http://127.0.0.1:8000/api/doctors/set-availability',
+        'https://medassist1.onrender.com/api/doctors/set-availability',
         {
           date: availabilityData.date,
           time_slots: availabilityData.timeSlots.map(slot => ({

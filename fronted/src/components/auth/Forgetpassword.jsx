@@ -18,7 +18,7 @@ const ForgetPassword = () => {
     setError(null);
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/auth/forgot-password', {
+      const response = await axios.post('https://medassist1.onrender.com/api/auth/forgot-password', {
         email: formData.email
       });
 

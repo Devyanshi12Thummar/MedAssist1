@@ -16,7 +16,7 @@ const ResetPassword = () => {
   const handleReset = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/auth/reset-password', {
+      const response = await axios.post('https://medassist1.onrender.com/api/auth/reset-password', {
         email,
         token,
         password,

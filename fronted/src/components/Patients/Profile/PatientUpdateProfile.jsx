@@ -34,13 +34,13 @@ const PatientUpdateProfile = () => {
   // Add this at the top of your component, after the useState declarations
 // Update the image path constant
 // Update the image path constant at the top
-const imagePath = 'http://127.0.0.1:8000/storage/';
+const imagePath = 'https://medassist1.onrender.com/storage/';
 // D:\Devu\laravel-fronted\laravel-fronted\backend\storage\app\public\patients\profile-photos\1743833574_67f0c9e6620f5.jpg
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         const token = localStorage.getItem('auth_token');
-        const response = await axios.get('http://127.0.0.1:8000/api/patients/profile', {
+        const response = await axios.get('https://medassist1.onrender.com/api/patients/profile', {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Accept': 'application/json'
@@ -151,7 +151,7 @@ const imagePath = 'http://127.0.0.1:8000/storage/';
         });
   
         const response = await axios.post(
-          `http://127.0.0.1:8000/api/patients/${userId}?_method=PATCH`,
+          `https://medassist1.onrender.com/api/patients/${userId}?_method=PATCH`,
           formDataToSend,
           {
             headers: {

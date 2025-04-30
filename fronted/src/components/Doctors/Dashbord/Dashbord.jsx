@@ -26,7 +26,7 @@ const Dashboard = () => {
           return;
         }
 
-        const response = await axios.get('http://127.0.0.1:8000/api/doctors/profile', {
+        const response = await axios.get('https://medassist1.onrender.com/api/doctors/profile', {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Accept': 'application/json'
@@ -145,7 +145,7 @@ const Dashboard = () => {
                       <div className="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center border-2 border-blue-100 overflow-hidden">
                         {doctorData?.profile_photo ? (
                           <img 
-                            src={`http://127.0.0.1:8000/storage/${doctorData.profile_photo}`}
+                            src={`https://medassist1.onrender.com/storage/${doctorData.profile_photo}`}
                             alt={`Dr. ${doctorData?.first_name} ${doctorData?.last_name}`}
                             className="w-full h-full object-cover"
                             onError={(e) => {

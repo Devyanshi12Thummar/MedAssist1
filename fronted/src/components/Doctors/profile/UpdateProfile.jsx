@@ -171,7 +171,7 @@ const UpdateProfile = () => {
     try {
       const token = localStorage.getItem('auth_token');
       const response = await axios.post(
-        `http://127.0.0.1:8000/api/doctors/${userId}`,
+        `https://medassist1.onrender.com/api/doctors/${userId}`,
         formDataToSend,
         {
           headers: {
@@ -223,7 +223,7 @@ const UpdateProfile = () => {
 
         // Update preview if profile photo was updated
         if (updatedData.profile_photo) {
-          setPreview(`http://127.0.0.1:8000/storage/${updatedData.profile_photo}`);
+          setPreview(`https://medassist1.onrender.com/storage/${updatedData.profile_photo}`);
         }
 
         alert('Profile updated successfully!');
@@ -323,7 +323,7 @@ const UpdateProfile = () => {
           return;
         }
 
-        const response = await axios.get('http://127.0.0.1:8000/api/doctors/profile', {
+        const response = await axios.get('https://medassist1.onrender.com/api/doctors/profile', {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Accept': 'application/json'
@@ -389,7 +389,7 @@ const UpdateProfile = () => {
           });
 
           if (profileData.profile_photo) {
-            setPreview(`http://127.0.0.1:8000/storage/${profileData.profile_photo}`);
+            setPreview(`https://medassist1.onrender.com/storage/${profileData.profile_photo}`);
           }
         } else {
           throw new Error('Invalid response format');

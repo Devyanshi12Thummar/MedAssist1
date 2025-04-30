@@ -12,7 +12,7 @@ const ShowPatient = () => {
     const fetchPatients = async () => {
       try {
         const token = localStorage.getItem('auth_token');
-        const response = await axios.get('http://127.0.0.1:8000/api/doctors/patients', {
+        const response = await axios.get('https://medassist1.onrender.com/api/doctors/patients', {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Accept': 'application/json'
