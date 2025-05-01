@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '../Navbar';
+
 const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -9,8 +10,10 @@ const Login = () => {
     password: '',
     role: ''
   });
+
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -19,16 +22,19 @@ const Login = () => {
     // Clear any previous errors when user starts typing
     setError('');
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
+
     // Validate required fields
     if (!formData.email || !formData.password || !formData.role) {
       setError('Please fill in all required fields');
       setIsLoading(false);
       return;
     }
+
     try {
       // Step 1: Attempt login
       const loginResponse = await axios.post('http://127.0.0.1:8000/api/login', 
@@ -44,18 +50,22 @@ const Login = () => {
           }
         }
       );
+
       if (loginResponse.data.status === 'success') {
         const { token, user } = loginResponse.data.data;
+
         // Step 2: Role Validation
         if (user.role !== formData.role) {
           setError(`Access denied. You are registered as a ${user.role}`);
           setIsLoading(false);
           return;
         }
+
         // Step 3: Store Authentication Data
         localStorage.setItem('auth_token', token);
         localStorage.setItem('user_role', user.role);
         localStorage.setItem('user_data', JSON.stringify(user));
+
         // Step 4: Fetch Role-Specific Profile
         try {
           let profileEndpoint = '';
@@ -72,6 +82,7 @@ const Login = () => {
             default:
               throw new Error('Invalid role');
           }
+
           const profileResponse = await axios.get(profileEndpoint, {
             headers: {
               'Authorization': `Bearer ${token}`,
@@ -79,9 +90,11 @@ const Login = () => {
               'Content-Type': 'application/json'
             }
           });
+
           if (profileResponse.data.status === 'success') {
             // Store role-specific profile data
             localStorage.setItem(`${user.role}_data`, JSON.stringify(profileResponse.data.data));
+
             // Step 5: Role-Based Navigation
             switch (user.role) {
               case 'doctor':
@@ -108,8 +121,10 @@ const Login = () => {
       setIsLoading(false);
     }
   };
+
   const handleAuthError = (error) => {
     localStorage.clear(); // Clear any partial authentication data
+
     if (error.response) {
       switch (error.response.status) {
         case 401:
@@ -134,6 +149,7 @@ const Login = () => {
       setError('An unexpected error occurred. Please try again.');
     }
   };
+
   return (
     <>
       <Navbar />
@@ -142,6 +158,7 @@ const Login = () => {
           <h2 className="text-center text-3xl font-bold text-gray-900 mb-2">MedAssist</h2>
           <h3 className="text-center text-xl text-gray-600">Sign in to your account</h3>
         </div>
+
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow-lg sm:rounded-lg sm:px-10">
             {/* Show error message if exists */}
@@ -150,6 +167,7 @@ const Login = () => {
                 <span className="block sm:inline">{error}</span>
               </div>
             )}
+
             <form className="space-y-8 w-full max-w-2xl mx-auto p-6" onSubmit={handleSubmit}>
               {/* Role Selection */}
               <div className="mb-6">
@@ -169,6 +187,7 @@ const Login = () => {
                   <option value="patient">Patient</option>
                 </select>
               </div>
+
               {/* Email */}
               <div className="mb-6">
                 <label htmlFor="email" className="block text-sm font-semibold text-gray-800 mb-2">
@@ -186,6 +205,7 @@ const Login = () => {
                   placeholder="Enter your email"
                 />
               </div>
+
               {/* Password */}
               <div className="mb-6">
                 <label htmlFor="password" className="block text-sm font-semibold text-gray-800 mb-2">
@@ -203,6 +223,7 @@ const Login = () => {
                   placeholder="Enter your password"
                 />
               </div>
+
               {/* Remember Me and Forgot Password */}
               <div className="flex items-center justify-between mb-6 py-2">
                 <div className="flex items-center">
@@ -216,6 +237,7 @@ const Login = () => {
                     Remember me
                   </label>
                 </div>
+
                 <div className="text-sm">
                   <Link 
                     to="/forgotpassword" 
@@ -225,6 +247,7 @@ const Login = () => {
                   </Link>
                 </div>
               </div>
+
               {/* Submit Button */}
               <div className="mt-8">
                 <button
@@ -248,6 +271,7 @@ const Login = () => {
                 </button>
               </div>
             </form>
+
             {/* Registration link section - Hide for admin role */}
             {formData.role !== 'admin' && (
               <div className="mt-6">
@@ -261,6 +285,7 @@ const Login = () => {
                     </span>
                   </div>
                 </div>
+
                 <div className="mt-6 text-center">
                   <Link
                     to="/registration"
