@@ -13,8 +13,8 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:5173",  # React frontend
-        "http://127.0.0.1:8000",  # Laravel backend
+        "https://https://med-assist1.vercel.app",  # React frontend
+        "https://medassist1.onrender.com",  # Laravel backend
     ],
     allow_credentials=True,
     allow_methods=["*"],
