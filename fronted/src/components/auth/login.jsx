@@ -71,13 +71,13 @@ const Login = () => {
           let profileEndpoint = '';
           switch (user.role) {
             case 'doctor':
-              profileEndpoint = 'https://medassist1.onrender.com/api/doctors/profile';
+              profileEndpoint = 'http://127.0.0.1:8000/api/doctors/profile';
               break;
             case 'patient':
-              profileEndpoint = 'https://medassist1.onrender.com/api/patients/profile';
+              profileEndpoint = 'http://127.0.0.1:8000/api/patients/profile';
               break;
             // case 'admin':
-            //   profileEndpoint = 'https://medassist1.onrender.com/api/admin/profile';
+            //   profileEndpoint = 'http://127.0.0.1:8000/api/admin/profile';
             //   break;
             default:
               throw new Error('Invalid role');
