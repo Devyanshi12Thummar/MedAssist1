@@ -150,9 +150,9 @@ const Registration = () => {
       return;
     }
 
-    // Prepare form data with exact field names matching the backend
+    // Prepare form data
     const userData = {
-      email: formData.emailAddress.trim(),
+      email: formData.emailAddress.trim(),  // trim to remove any whitespace
       password: formData.password,
       password_confirmation: formData.confirmPassword,
       role: formData.role,
@@ -164,7 +164,7 @@ const Registration = () => {
     };
 
     try {
-      const response = await axios.post('https://medassist1.onrender.com/api/register', userData, {
+      const response = await axios.post('http://127.0.0.1:8000/api/register', userData, {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -177,7 +177,6 @@ const Registration = () => {
         
         if (response.data.data?.token) {
           localStorage.setItem('auth_token', response.data.data.token);
-          localStorage.setItem('user_role', formData.role);
         }
         navigate('/login');
       }
@@ -185,14 +184,13 @@ const Registration = () => {
       let errorMessage = 'Registration failed. Please try again.';
       
       if (error.response?.data?.errors) {
-        const errors = error.response.data.errors;
-        errorMessage = Object.values(errors).flat().join('\n');
+        errorMessage = Object.values(error.response.data.errors).flat().join('\n');
       } else if (error.response?.data?.message) {
         errorMessage = error.response.data.message;
       }
       
       setMessage(errorMessage);
-      setError(errorMessage); // Add error state if not already present
+      alert(errorMessage);
     } finally {
       setLoading(false);
     }
