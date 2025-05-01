@@ -164,7 +164,7 @@ const Registration = () => {
     };
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/register', userData, {
+      const response = await axios.post('https://medassist1.onrender.com/api/register', userData, {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -200,7 +200,7 @@ const Registration = () => {
     setMessage('');
 
     try {
-      await axios.post('http://localhost:8000/api/email/resend', { email: formData.email });
+      await axios.post('https://medassist1.onrender.com/api/email/resend', { email: formData.email });
       setMessage('Verification email resent. Please check your inbox.');
     } catch (error) {
       setMessage('Failed to resend verification email.');
