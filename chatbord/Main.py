@@ -12,9 +12,9 @@ app = FastAPI()
 # Update CORS middleware with specific origins
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "https://https://med-assist1.vercel.app",  # React frontend
-        "https://medassist1.onrender.com",  # Laravel backend
+    allow_origins=["*"
+        # "https://med-assist1.vercel.app",  # React frontend
+        # "https://medassist1.onrender.com",  # Laravel backend
     ],
     allow_credentials=True,
     allow_methods=["*"],
