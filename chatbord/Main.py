@@ -64,6 +64,6 @@ async def chat(data: ChatRequest):
     response = await fetch_gemini_response(prompt)
     return {"response": response}
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8001)
